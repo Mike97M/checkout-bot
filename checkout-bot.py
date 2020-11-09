@@ -52,7 +52,7 @@ class CheckOutBot:
         # this is how you click the final checkout button
         # self.driver.find_elements_by_class_name(
         #     "ContinueButton__StyledContinue-fh9abp-0"
-        # )[1].click()
+        # )[2].click()
 
     def __del__(self):
         self.driver.close()
