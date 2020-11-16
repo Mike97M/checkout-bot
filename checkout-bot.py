@@ -1,8 +1,9 @@
 import account
 
+import pickle
 import time
 
-print(account.email)
+import os
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -10,15 +11,26 @@ from selenium.webdriver.common.keys import Keys
 
 class CheckOutBot:
     def __init__(self):
-        self.driver = webdriver.Chrome()
+        options = webdriver.ChromeOptions()
+        options.add_argument("user-data-dir=/home/mike/chrome-checkout")
+        self.driver = webdriver.Chrome(chrome_options=options)
         self.driver.get("https://www.mediamarkt.de/")
-        self.accept_cookies()
+        # self.accept_cookies()
 
     def accept_cookies(self):
         button = self.driver.find_element_by_id("privacy-layer-accept-all-button")
         button.click()
 
     def login(self, email, password):
+
+        # if os.path.exists("session.data"):
+        #     with open("session.data", "rb") as file:
+        #         cookies = pickle.load(file)
+        #         print("Session loaded from file")
+        #         for cookie in cookies:
+        #             print(cookie)
+        #             self.driver.add_cookie(cookie)
+        #         return True
 
         self.driver.get("https://www.mediamarkt.de/de/myaccount")
         time.sleep(5)
@@ -29,6 +41,11 @@ class CheckOutBot:
         pass_input.clear()
         pass_input.send_keys(password)
         self.driver.find_element_by_id("mms-login-form__login-button").click()
+        time.sleep(3)
+        # with open("session.data", "wb") as file:
+        #     pickle.dump(self.driver.get_cookies(), file)
+        #     for cookie in self.driver.get_cookies():
+        #         print(cookie)
 
     def add_product_to_chart(self, link):
         self.driver.get(link)
@@ -52,7 +69,7 @@ class CheckOutBot:
         # this is how you click the final checkout button
         # self.driver.find_elements_by_class_name(
         #     "ContinueButton__StyledContinue-fh9abp-0"
-        # )[2].click()
+        # )[1].click()
 
     def __del__(self):
         self.driver.close()
@@ -61,7 +78,10 @@ class CheckOutBot:
 if __name__ == "__main__":
     checkout_bot = CheckOutBot()
 
-    checkout_bot.login(account.email, account.password)
+    # checkout_bot.login(account.email, account.password)
+    # time.sleep(30)
+    # exit()
+
     checkout_bot.add_product_to_chart(
         "https://www.mediamarkt.de/de/product/_sandisk-extreme%C2%AE-2484123.html"
     )
