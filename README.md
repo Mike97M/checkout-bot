@@ -1,5 +1,6 @@
 # Building a checkout bot with Python - selenium tutorial
 Here is the video tutorial: https://youtu.be/M3OiYDQcy1g
+
 Here is the video tutorial for part2: https://youtu.be/rrGTovcUA2k where I show you how you can save the session so you won't have to login again multiple times.
 
 # How to run:
